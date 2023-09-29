@@ -4,6 +4,11 @@ import Typography from '@mui/material/Typography';
 
 import FormSignUp from './components/FormSignUp';
 function App() {
+
+  const handleSubmit = (valores) => {
+    console.log("appjs:", valores)
+  }
+
   return (
     <Container 
       component="section" 
@@ -14,7 +19,7 @@ function App() {
         component="h1">
           Formulario Registro
         </Typography>
-      <FormSignUp />
+      <FormSignUp handleSubmit={handleSubmit} />
     </Container>
   );
 }
