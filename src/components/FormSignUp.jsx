@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "@mui/material/Button"
+import Button from "@mui/material/Button";
 import TextField from '@mui/material/TextField';
 import Switch from '@mui/material/Switch';
 import FormGroup from '@mui/material/FormGroup';
@@ -19,16 +19,54 @@ function FormSignUp({handleSubmit}) {
 		}
 	})
 
+	const [errors2, setErrors2] = useState({
+		lastName: {
+			error: false,
+			message: "Deben ser al menos 3 caracteres"
+		}
+	})
+
+	const [errors3, setErrors3] = useState({
+		email: {
+			error: false,
+			message: "Esto no es formato válido para email"
+		}
+	})
+
 	function validarNombre(nombre){
 		if(nombre.length >= 3) {
 			return {name: {
 				error: false, 
-				message: ''}}
+				message: ""}}
 		} else {
 			return {name: {
 				error: true, 
-				message: 'Deben ser al menos 3 caracteres'}}
-		}
+				message: "Deben ser al menos 3 caracteres"}}
+		} 
+	}
+
+	function validarApellido(apellido){
+		if(apellido.length >= 3) {
+			return {lastName: {
+				error: false, 
+				message: ""}}
+		} else {
+			return {lastName: {
+				error: true, 
+				message: "Deben ser al menos 3 caracteres"}}
+		} 
+	}
+
+	function validarEmail(email){
+		if(email.length >= 3) {
+			return {email: {
+				error: false, 
+				message: ""}}
+		} else {
+			return {email: {
+				error: true, 
+				message: "Esto no es formato válido para email"}}
+		} 
 	}
 
 	return (
@@ -48,8 +86,7 @@ function FormSignUp({handleSubmit}) {
 				variant="outlined"
 				fullWidth
 				margin="normal"
-				onChange={(e) => setName(e.target.value)
-				}
+				onChange={(e) => setName(e.target.value)}
 				value={name}
 				error={errors.name.error}
 				helperText={errors.name.error ? errors.name.message : ""}
@@ -64,8 +101,13 @@ function FormSignUp({handleSubmit}) {
 				variant="outlined"
 				fullWidth
 				margin="normal"
-				value={lastName}
 				onChange={(e) => setLastName(e.target.value)}
+				value={lastName}
+				error={errors2.lastName.error}
+				helperText={errors2.lastName.error ? errors2.lastName.message : ""}
+				onBlur={(e) => {
+					setErrors2(validarApellido(e.target.value))
+				}}
 			/>
 			<TextField 
 				id="email" 
@@ -73,8 +115,13 @@ function FormSignUp({handleSubmit}) {
 				variant="outlined"
 				fullWidth
 				margin="normal"
-				value={email}
 				onChange={(e) => setEmail(e.target.value)}
+				value={email}
+				error={errors3.email.error}
+				helperText={errors3.email.error ? errors3.email.message : ""}
+				onBlur={(e) => {
+					setErrors3(validarEmail(e.target.value))
+				}}
 			/>
 			<FormGroup>
 				<FormControlLabel control={
